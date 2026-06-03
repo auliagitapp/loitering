@@ -1,0 +1,8 @@
+# ATM Loitering Detection System
+# YOLOv8 + ByteTrack + Optical Flow + Presence Heatmap
+
+ultralytics>=8.0.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+supervision>=0.18.0
+pandas>=2.0.0

@@ -1,0 +1,4 @@
+video,frame,timestamp_sec,track_id,time_in_roi_sec,reasons,wall_time
+50,15,0.60,1,0.6,FACE?,2026-06-04 01:21:25
+50,264,10.56,1,10.5,FACE?,2026-06-04 01:22:08
+50,295,11.80,2,0.0,CROWD,2026-06-04 01:22:15

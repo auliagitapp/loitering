@@ -68,7 +68,11 @@ class LoiteringDetector:
                 pyr_scale=0.5, levels=3, winsize=15,
                 iterations=3, poly_n=5, poly_sigma=1.2, flags=0
             )
-            motion_map = np.sqrt(flow[..., 0]**2 + flow[..., 1]**2)
+            raw_map = np.sqrt(flow[..., 0]**2 + flow[..., 1]**2)
+            # Kompensasi FPS rendah: gerakan antar frame kecil meski aksi nyata besar
+            # Scale ke ekuivalen 30fps agar threshold tetap konsisten
+            fps_scale = max(30.0 / max(self.fps, 1.0), 1.0)
+            motion_map = raw_map * fps_scale
         self._prev_gray = gray
 
         # ------------------------------------------------------------------
@@ -181,17 +185,22 @@ class LoiteringDetector:
                              c, 1)
 
         # Info ringkas
-        loitering_persons = self.track_manager.get_loitering_persons()
-        critical_count  = sum(1 for p in loitering_persons if p.flags.is_critical())
-        loitering_count = len(loitering_persons)
-        total_count     = len(track_list)
+        # Hitung berdasarkan PersonState aktif saat ini saja (bukan akumulasi events)
+        # Ini mencegah "Loitering: 28" padahal orangnya 1
+        all_persons = self.track_manager.get_all_active()
+        loitering_persons = [p for p in all_persons if p.is_loitering]
+        critical_persons  = [p for p in loitering_persons if p.flags.is_critical()]
+        total_count       = len(track_list)
 
-        info = f"People: {total_count}   Loitering: {loitering_count}"
-        if critical_count > 0:
-            info += f"   !! TAMPERING: {critical_count}"
+        # Tampilkan jumlah orang SAAT INI, bukan total akumulasi
+        info = f"People: {total_count}"
+        if critical_persons:
+            info += f"   !! TAMPERING DETECTED"
+        elif loitering_persons:
+            info += f"   ! SUSPICIOUS"
 
-        info_color = config.COLOR_TAMPERING if critical_count > 0 else \
-                     config.COLOR_LOITERING if loitering_count > 0 else \
+        info_color = config.COLOR_TAMPERING if critical_persons else \
+                     config.COLOR_LOITERING if loitering_persons else \
                      (0, 200, 0)
 
         cv2.putText(frame, info, (10, 24),

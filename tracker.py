@@ -316,16 +316,16 @@ class TrackManager:
     """
 
     SAME_PERSON_IOU_THRESHOLD = 0.3
-    # Berapa frame kita pertahankan "ghost" track sebelum benar-benar hapus
-    # Lebih panjang dari TRACK_LOST_FRAMES di config (itu untuk ByteTrack)
-    # Ini adalah layer kedua di level aplikasi kita
-    GHOST_FRAMES_THRESHOLD = 90  # ~3 detik di 30fps
+    # Ghost threshold dalam DETIK (dikonversi ke frame saat runtime)
+    # Konsisten untuk semua FPS — 3 detik cukup untuk recovery occlusion singkat
+    GHOST_SEC_THRESHOLD = 3.0
 
     def __init__(self, fps: float):
         self.fps = fps
         self.active_tracks: dict[int, PersonState] = {}
         self.archived_tracks: dict[int, PersonState] = {}
         self._alerted_cells: set = set()
+        self._alert_cooldown: dict[int, float] = {}  # track_id → last alert timestamp
         # Frame counter untuk ghost tracking
         self._ghost_counters: dict[int, int] = {}
 
@@ -367,7 +367,8 @@ class TrackManager:
             # Ini mencegah deteksi "hilang" saat orang diam sebentar
             self._ghost_counters[tid] = self._ghost_counters.get(tid, 0) + 1
 
-            if self._ghost_counters[tid] < self.GHOST_FRAMES_THRESHOLD:
+            ghost_frame_limit = int(self.GHOST_SEC_THRESHOLD * self.fps)
+            if self._ghost_counters[tid] < ghost_frame_limit:
                 # Masih dalam grace period — update dengan bbox terakhir yang diketahui
                 if person.last_bbox is not None:
                     mag = self._get_bbox_motion(person.last_bbox, motion_map) \
@@ -421,14 +422,31 @@ class TrackManager:
         return best_time
 
     def should_send_alert(self, person: PersonState) -> bool:
-        """Cegah alert spam: satu area grid + reason = satu alert."""
+        """
+        Cegah alert spam.
+        Grid 200px + cooldown 10 detik per track_id.
+        Untuk video FPS rendah / slow motion, orang yang sama
+        bergerak lambat tapi ID ganti-ganti → pakai grid lebih besar.
+        """
         if not person.positions:
             return False
+
+        import time as _time
+
+        # Cooldown per track_id: jangan alert ID yang sama dalam 10 detik
+        now = _time.time()
+        last_alert = self._alert_cooldown.get(person.track_id, 0)
+        if now - last_alert < 10.0:
+            return False
+
         cx, cy = person.positions[-1]
-        cell = (int(cx // 100), int(cy // 100), person.flags.describe())
+        # Grid 200px — lebih toleran terhadap pergerakan kecil
+        cell = (int(cx // 200), int(cy // 200), person.flags.describe())
         if cell in self._alerted_cells:
             return False
+
         self._alerted_cells.add(cell)
+        self._alert_cooldown[person.track_id] = now
         return True
 
     def get_loitering_persons(self) -> list:

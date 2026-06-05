@@ -25,7 +25,7 @@
 ## Apa ini (dan apa yang BUKAN)
 
 Proyek ini adalah **prototipe akademik** untuk mendeteksi pola pergerakan
-mondar-mandir di zona ATM. Sistem **tidak** melatih model klasifikasi loitering —
+mondar-mandir. Sistem **tidak** melatih model klasifikasi loitering —
 loitering disimpulkan murni dari **heuristik temporal-spasial** pada lintasan
 (trajectory) orang yang dilacak.
 
@@ -78,9 +78,8 @@ mondar-mandir meski sempat berganti arah berkali-kali.
 | Warna  | Arti                                              |
 | ------ | ------------------------------------------------- |
 | Hijau  | Person terdeteksi & dilacak — **bukan** loitering |
-| Oranye | Mendekati ambang (warning)                        |
 | Merah  | **Loitering terdeteksi** (pacing)                 |
-| Kuning | Garis ROI / zona ATM                              |
+
 
 ---
 
@@ -106,13 +105,6 @@ loitering/
 ## Instalasi
 
 ```bash
-# (disarankan) buat virtual environment
-python -m venv .venv
-# Windows
-.venv\Scripts\activate
-# Linux/macOS
-source .venv/bin/activate
-
 pip install -r requirements.txt
 ```
 
@@ -142,7 +134,7 @@ python main.py --folder videos/
 python main.py --video videos/66.mp4 --annotation annotation.txt
 ```
 
-> Catatan: file anotasi bernama **`annotation.txt`** (dipisah spasi), bukan `.csv`.
+> Catatan: file anotasi bernama **`annotation.txt`** .
 
 Output disimpan ke `output/<nama_video>/`: video beranotasi, `events.csv`,
 screenshot alert, dan `presence_heatmap.jpg`.

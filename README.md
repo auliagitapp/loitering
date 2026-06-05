@@ -22,7 +22,7 @@
 
 ---
 
-## Apa ini (dan apa yang BUKAN)
+## Apa ini
 
 Proyek ini adalah **prototipe akademik** untuk mendeteksi pola pergerakan
 mondar-mandir. Sistem **tidak** melatih model klasifikasi loitering —
@@ -42,7 +42,7 @@ loitering disimpulkan murni dari **heuristik temporal-spasial** pada lintasan
 
 ---
 
-## Cara Kerja (Pipeline)
+## Pipeline
 
 ```mermaid
 flowchart LR
@@ -160,7 +160,7 @@ screenshot alert, dan `presence_heatmap.jpg`.
 ---
 
 
-## 👥 Tim Pengembang
+## 👥 Tim
 
 <div align="center">
 

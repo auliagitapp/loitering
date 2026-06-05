@@ -1,15 +1,23 @@
-# Loitering Detection (Prototipe Rule-Based)
+<p align="center">
+  <img src="banner.svg" alt="Loitering Detection" width="100%">
+</p>
 
-> Deteksi **potensi loitering** pada rekaman CCTV ATM berbasis aturan (rule-based),
-> dibangun di atas YOLOv8 _pretrained_ untuk deteksi person dan ByteTrack untuk tracking.
-> Definisi loitering pada sistem ini = **perilaku mondar-mandir (pacing)**.
+<h1 align="center">🚶‍♂️ Computer Vision for Human Loitering Detection 🚶‍♀️</h1>
+<p align="center"><i>"Mengenali pola mondar-mandir, bukan menghakimi orang."</i></p>
+<p align="center">Prototipe Computer Vision Rule-Based · Deteksi Potensi Loitering pada CCTV ATM</p>
 
-<p>
-  <img alt="status" src="https://img.shields.io/badge/status-prototype-orange">
-  <img alt="python" src="https://img.shields.io/badge/Python-3.10%2B-blue">
-  <img alt="yolov8" src="https://img.shields.io/badge/Detector-YOLOv8n-00BFA5">
-  <img alt="tracker" src="https://img.shields.io/badge/Tracker-ByteTrack%20%2F%20Supervision-6E56CF">
-  <img alt="approach" src="https://img.shields.io/badge/Approach-Rule--based-444">
+<p align="center">
+  <img alt="status"  src="https://img.shields.io/badge/STATUS-PROTOTYPE-E3873A?style=for-the-badge">
+  <img alt="type"    src="https://img.shields.io/badge/APPROACH-RULE--BASED-444?style=for-the-badge">
+  <img alt="license" src="https://img.shields.io/badge/USE-ACADEMIC-3FB950?style=for-the-badge">
+</p>
+
+<p align="center">
+  <img alt="python"      src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+  <img alt="ultralytics" src="https://img.shields.io/badge/YOLOv8-00BFA5?style=for-the-badge&logo=ultralytics&logoColor=white">
+  <img alt="opencv"      src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white">
+  <img alt="numpy"       src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white">
+  <img alt="supervision" src="https://img.shields.io/badge/Supervision_ByteTrack-6E56CF?style=for-the-badge">
 </p>
 
 ---
@@ -156,5 +164,25 @@ screenshot alert, dan `presence_heatmap.jpg`.
 
 > Untuk menurunkan _false positive_, set ROI eksplisit (`--roi` / `--set-roi`)
 > alih-alih membiarkan `ATM_ROI = None` (seluruh frame).
+
+---
+
+---
+
+## 👥 Tim
+
+<div align="center">
+
+| No | Nama | NIM | Program Studi |
+|:--:|------|-----|---------------|
+| 1. | **Aulia Gita Pratiwi** | 25 / 572701 / PPA / 07197 |
+| 2. | **Farichaturrifqi Aryanitasari** | 25 / 574224 / PPA / 07240 |
+| 3. | **Rafel Romero Hirawanto** | 25 / 573260 / PPA / 07216 |
+| 4. | **Fajar Sabik** | 25 / 562482 / PPA / 07064 |
+
+<sub>Magister Kecerdasan Artifisial<sub>
+<sub>Universitas Gadjah Mada · Yogyakarta, Indonesia</sub>
+
+</div>
 
 ---

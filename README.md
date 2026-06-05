@@ -173,14 +173,14 @@ screenshot alert, dan `presence_heatmap.jpg`.
 
 <div align="center">
 
-| No | Nama | NIM | Program Studi |
+| No | Nama | NIM |
 |:--:|------|-----|---------------|
 | 1. | **Aulia Gita Pratiwi** | 25 / 572701 / PPA / 07197 |
 | 2. | **Farichaturrifqi Aryanitasari** | 25 / 574224 / PPA / 07240 |
 | 3. | **Rafel Romero Hirawanto** | 25 / 573260 / PPA / 07216 |
 | 4. | **Fajar Sabik** | 25 / 562482 / PPA / 07064 |
 
-<sub>Magister Kecerdasan Artifisial<sub>
+<sub>Magister Kecerdasan Artifisial</sub>
 <sub>Universitas Gadjah Mada · Yogyakarta, Indonesia</sub>
 
 </div>
